@@ -1,0 +1,11 @@
+build/*
+.eggs/*
+.idea/*
+.venv/*
+dist/*
+pei_processor.egg-info/*
+eggs/*
+PEI-Processing.iml
+source_data/*
+target_data/*
+__pycache__/
