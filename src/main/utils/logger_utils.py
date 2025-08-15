@@ -29,7 +29,7 @@ class LoggerUtils:
 
 def log_start(logger):
     """
-    Logs the start time of the process.
+    Logs the start time
     :param logger:
     :return:
     """
@@ -40,7 +40,7 @@ def log_start(logger):
 
 def log_end(start_time, logger):
     """
-    Logs the end time of the process and calculates the duration.
+    Logs the end time
     :param start_time:
     :param logger:
     """

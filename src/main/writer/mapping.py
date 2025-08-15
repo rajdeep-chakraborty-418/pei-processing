@@ -1,6 +1,4 @@
 from src.main.utils.constants import (
-    CATALOG_NAME,
-    SCHEMA_NAME,
     PRODUCT_KEY_NAME,
     ORDER_KEY_NAME,
     CUSTOMER_KEY_NAME,

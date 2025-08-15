@@ -72,8 +72,8 @@ def write_delta_table_wrapper(input_env: str, writer: Writer, input_write_dict: 
 def run_custom_sql_script(input_env: str, spark: SparkSession, logger):
     """
     Run Custom SQL Scripts
+    :param spark:
     :param input_env:
-    :param writer:
     :param logger:
     :return:
     """
@@ -125,7 +125,7 @@ def main():
                 source_file_path = os.path.join(local_root, LOCAL_INPUT_FOLDER)
             else:
                 """
-                For Databricks Environment source Folder is set to Volume Root or dbfs
+                For Databricks Environment source Folder is set to Volume
                 """
                 source_file_path=DATABRICKS_INPUT_PATH
 
