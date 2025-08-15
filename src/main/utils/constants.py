@@ -3,28 +3,25 @@ SCHEMA_NAME: str = "pei"
 VOLUME_NAME: str = "artifacts"
 INPUT_DIRECTORY: str = "input"
 DATABRICKS_INPUT_PATH: str = f"/Volumes/{CATALOG_NAME}/{SCHEMA_NAME}/{VOLUME_NAME}/{INPUT_DIRECTORY}"
-
 DELTA_TABLE_FORMAT: str = "delta"
 DELTA_TABLE_MODE: str = "overwrite"
 LOCAL_INPUT_FOLDER: str = "source_data"
-
 CUSTOMER_FILE_NAME: str = "Customers.csv"
 PRODUCT_FILE_NAME: str = "Products.csv"
 ORDER_FILE_NAME: str = "Orders.json"
-
 READER_MAPPING_SCHEMA_KEY_NAME: str = "schema"
 READER_MAPPING_OPTIONS_KEY_NAME: str = "options"
-
 PRODUCT_KEY_NAME: str = "products"
 ORDER_KEY_NAME: str = "orders"
 CUSTOMER_KEY_NAME: str = "customers"
 YEAR_CAT_SUB_CAT_CUST_KEY_NAME: str = "year_cat_sub_cat_cust"
-
 DATAFRAME_KEY_NAME: str = "dataframe"
 TABLE_LAYER_KEY_NAME: str = "table_layer"
-
 RAW_KEY_NAME: str = "raw"
 ENRICHED_KEY_NAME: str = "enriched"
 AGGREGATE_KEY_NAME: str = "aggregate"
-
 ROUND_DIGITS: int = 2
+SQL_FILES: list[str] = ["1.sql", "2.sql", "3.sql", "4.sql"]
+SQL_FILES_DIRECTORY: str = "sql_files"
+DATABRICKS_SQL_FILES_DIRECTORY = f"/Volumes/{CATALOG_NAME}/{SCHEMA_NAME}/{VOLUME_NAME}/{SQL_FILES_DIRECTORY}"
+NO_OF_RECORDS_TO_SHOW: int = 50

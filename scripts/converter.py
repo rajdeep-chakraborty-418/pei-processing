@@ -9,13 +9,13 @@ def excel_csv_converter(input_file: str, output_file: str):
     """
     pandas_dataframe = pd.read_excel(input_file, sheet_name='Worksheet')
     pandas_dataframe = pandas_dataframe.replace(
-        "\n", " ",
+        "\n", "",
         regex=True
     ).replace(
-        "\r", " ",
+        "\r", "",
         regex=True
     ).replace(
-        "\r\n", " ",
+        "\r\n", "",
         regex=True
     )
     pandas_dataframe.to_csv(output_file, index=False)

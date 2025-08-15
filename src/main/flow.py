@@ -22,7 +22,7 @@ from src.main.utils.constants import (
     TABLE_LAYER_KEY_NAME,
     AGGREGATE_KEY_NAME,
     ENRICHED_KEY_NAME,
-    RAW_KEY_NAME, DATABRICKS_INPUT_PATH,
+    RAW_KEY_NAME, DATABRICKS_INPUT_PATH, SQL_FILES, DATABRICKS_SQL_FILES_DIRECTORY, NO_OF_RECORDS_TO_SHOW,
 )
 from src.main.utils.logger_utils import log_end
 from src.main.writer.mapping import get_table_name, TABLE_MAPPING
@@ -69,6 +69,28 @@ def write_delta_table_wrapper(input_env: str, writer: Writer, input_write_dict: 
                 input_table_name=input_table_name
             )
 
+def run_custom_sql_script(input_env: str, spark: SparkSession, logger):
+    """
+    Run Custom SQL Scripts
+    :param input_env:
+    :param writer:
+    :param logger:
+    :return:
+    """
+    if input_env == "local":
+        """
+        Skip Running Custom SQL Scripts in Local Environment
+        """
+        logger.info(f"Custom SQL Script Execution Skipped for {input_env} Environment")
+        return
+
+    for each_sql_file in SQL_FILES:
+        logger.info(f"Custom SQL Script Execution Started for {input_env} Environment for File {each_sql_file}")
+        with open(DATABRICKS_SQL_FILES_DIRECTORY+"/"+each_sql_file, "r") as fp_pointer:
+            sql_content = fp_pointer.read()
+            dataframe = spark.sql(sql_content)
+            dataframe.show(n=NO_OF_RECORDS_TO_SHOW, truncate=False)
+        logger.info(f"Custom SQL Script Execution Completed for {input_env} Environment for File {each_sql_file}")
 
 def main():
     """
@@ -263,6 +285,20 @@ def main():
             logger.info(f"Aggregate Dataframe Written Successfully in Delta Table")
         except Exception as ex:
             logger.error(f"Aggregate Dataframe Writing To Delta Failed {ex}")
+            raise
+        """
+        Execute Custom SQL Scripts on Aggregate Table
+        """
+        try:
+            logger.info(f"Custom SQL Script Execution Started")
+            run_custom_sql_script(
+                input_env=env,
+                spark=spark,
+                logger=logger
+            )
+            logger.info(f"Custom SQL Script Executed Successfully")
+        except Exception as ex:
+            logger.error(f"Custom SQL Script Execution Failed {ex}")
             raise
     except Exception as ex:
         logger.error("Main Flow Failed" + " %s", str(ex))

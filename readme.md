@@ -51,23 +51,25 @@
   - create a schema named pei
   - create a volume named artifacts
   - create a folder under artifacts named input
+  - Make Sure the input data base path is "/Volumes/pipeline/pei/artifacts/input"
   - Upload the input data files into the input folder
     - Products.csv
     - Orders.json
     - Customers.csv
-  - Make Sure the input data base path is "/Volumes/pipeline/pei/artifacts/input"
+  - create a folder under artifacts named sql_files
+    - Upload SQL files from scripts over there
 - Navigate to src.main.flow.py
-- Run the flow.py with the All Purpose Cluster and Observe Logs
+- Run the flow.py with the All Purpose Cluster / Serverless
+- Observe the logs in console for completion of steps with message
 - Once Completed Open the Delta Tables in Databricks SQL
   - Raw Tables
-    - pei.orders_raw
-    - pei.customers_raw
-    - pei.products_raw
+    - pipeline.pei.orders_raw
+    - pipeline.pei.customers_raw
+    - pipeline.pei.products_raw
   - Enriched Tables
-    - pei.orders_custom_enriched
-    - pei.customers_enriched
-    - pei.products_enriched
+    - pipeline.pei.orders_custom_enriched
+    - pipeline.pei.customers_enriched
+    - pipeline.pei.products_enriched
   - Aggregated Table
     - pei.year_cat_sub_cat_cust_aggregate 
-- Open the SQL Scripts in scripts directory and execute them against the Aggregated Table
-  - Observe the Results
+- Display Top 50 records for each SQL in terminal
