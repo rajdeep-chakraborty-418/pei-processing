@@ -24,4 +24,4 @@ jobs:
 
       - name: Run Test Cases
         run: |
-          make unit_tests
+          make unit_test
