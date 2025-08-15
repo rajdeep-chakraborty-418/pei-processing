@@ -8,7 +8,7 @@
 - No Timestamp Column in Customer & Product thus random record based on 
   - Customer Id for Customers
   - Product Id for Products
-- Customer Id NULL and Product Id NULL are not considered for any processing and removed from the dataset.
+- Customer Id NULL and Product Id NULL are removed from Master datasets.
 - SQL Queries have been provided under scripts directory for reference and execution.
   - These should be executed against Aggregated Table
 
