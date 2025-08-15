@@ -24,19 +24,19 @@ class TestEnriched(unittest.TestCase):
         - For Orders Year Conversion from Order Date
         """
         self.raw_product_data = [
-            {"Product ID": "Product-1", "Product Name": "Product A", "Category": "Category 1", "Sub-Category": "Sub-Category 1"},
-            {"Product ID": "Product-1", "Product Name": "Product A", "Category": "Category 1", "Sub-Category": "Sub-Category 1"},
-            {"Product ID": "", "Product Name": "Product Blank", "Category": "Category Blank", "Sub-Category": "Sub-Category Blank"},
-            {"Product ID": None, "Product Name": "Product Blank", "Category": "Category Blank", "Sub-Category": "Sub-Category Blank"},
+            {"product_id": "Product-1", "product_name": "Product A", "category": "Category 1", "sub_category": "Sub-Category 1"},
+            {"product_id": "Product-1", "product_name": "Product A", "category": "Category 1", "sub_category": "Sub-Category 1"},
+            {"product_id": "", "product_name": "Product Blank", "category": "Category Blank", "sub_category": "Sub-Category Blank"},
+            {"product_id": None, "product_name": "Product Blank", "category": "Category Blank", "sub_category": "Sub-Category Blank"},
         ]
         self.raw_customer_data = [
-            {"Customer ID": "Customer-1", "Customer Name": "Customer A", "Country": "Country 1"},
-            {"Customer ID": "Customer-1", "Customer Name": "Customer A", "Country": "Country 1"},
-            {"Customer ID": "", "Customer Name": "Customer Blank", "Country": "Customer Blank"},
-            {"Customer ID": None, "Customer Name": "Customer Blank", "Country": "Customer Blank"},
+            {"customer_id": "Customer-1", "customer_name": "Customer A", "country": "Country 1"},
+            {"customer_id": "Customer-1", "customer_name": "Customer A", "country": "Country 1"},
+            {"customer_id": "", "customer_name": "Customer Blank", "country": "Customer Blank"},
+            {"customer_id": None, "customer_name": "Customer Blank", "country": "Customer Blank"},
         ]
         self.raw_order_data = [
-            {"Order ID": "Order-1",  "Order Date": "15/8/2025", "Customer ID": "Customer-1", "Product ID": "Product-1", "Quantity": 2, "Price": 100.0, "Discount": 0.1, "Profit": 20.34567},
+            {"order_id": "Order-1",  "order_date": "15/8/2025", "customer_id": "Customer-1", "product_id": "Product-1", "quantity": 2, "price": 100.0, "discount": 0.1, "profit": 20.34567},
         ]
         self.input_products_dataframe = self.spark.createDataFrame(self.raw_product_data)
         self.input_customers_dataframe = self.spark.createDataFrame(self.raw_customer_data)
@@ -48,9 +48,9 @@ class TestEnriched(unittest.TestCase):
         """
         self.spark.stop()
 
-    def test_raw_source_enrichment_products(self):
+    def test_raw_source_enrichment(self):
         """
-        Test Enrichment Logic for Products
+        Test Enrichment Logic
         :return:
         """
         test_cases = [

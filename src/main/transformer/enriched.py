@@ -7,7 +7,7 @@ from src.main.utils.constants import ROUND_DIGITS
 def raw_source_enrichment(input_dataframe: DataFrame, input_table_type: str) -> DataFrame:
     """
     Enrich Raw Source Dataframe
-        Select Only required Columns and Rename to lower case
+        Select Only required Columns
         Drop All Rest Columns
         Null Check on Primary Key Columns
         Remove Duplicates based on Primary Key Columns
@@ -24,14 +24,7 @@ def raw_source_enrichment(input_dataframe: DataFrame, input_table_type: str) -> 
     output_dataframe: DataFrame = input_dataframe
     match input_table_type:
         case "products":
-            output_dataframe = input_dataframe.withColumns(
-                {
-                    "product_id": input_dataframe["Product ID"],
-                    "product_name": input_dataframe["Product Name"],
-                    "category": input_dataframe["Category"],
-                    "sub_category": input_dataframe["Sub-Category"]
-                }
-            ).select(
+            output_dataframe = input_dataframe.select(
                 col("product_id"),
                 col("product_name"),
                 col("category"),
@@ -45,13 +38,7 @@ def raw_source_enrichment(input_dataframe: DataFrame, input_table_type: str) -> 
             ).drop(*["row_num"])
 
         case "customers":
-            output_dataframe = input_dataframe.withColumns(
-                {
-                    "customer_id": input_dataframe["Customer ID"],
-                    "customer_name": input_dataframe["Customer Name"],
-                    "country": input_dataframe["Country"],
-                }
-            ).select(
+            output_dataframe = input_dataframe.select(
                 col("customer_id"),
                 col("customer_name"),
                 col("country")
@@ -64,18 +51,7 @@ def raw_source_enrichment(input_dataframe: DataFrame, input_table_type: str) -> 
             ).drop(*["row_num"])
 
         case "orders":
-            output_dataframe = input_dataframe.withColumns(
-                {
-                    "order_id": input_dataframe["Order ID"],
-                    "order_date": input_dataframe["Order Date"],
-                    "customer_id": input_dataframe["Customer ID"],
-                    "product_id": input_dataframe["Product ID"],
-                    "quantity": input_dataframe["Quantity"],
-                    "price": input_dataframe["Price"],
-                    "discount": input_dataframe["Discount"],
-                    "profit": input_dataframe["Profit"]
-                }
-            ).select(
+            output_dataframe = input_dataframe.select(
                 col("order_id"),
                 col("order_date"),
                 split(col("order_date"), "/")[2].alias("year"),

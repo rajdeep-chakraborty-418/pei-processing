@@ -27,6 +27,7 @@ from src.main.utils.constants import (
 from src.main.utils.logger_utils import log_end
 from src.main.writer.mapping import get_table_name, TABLE_MAPPING
 from src.main.writer.writer import Writer
+from src.main.cleaner.cleansed import raw_source_cleansed
 
 
 def get_local_project_root() -> str:
@@ -40,12 +41,13 @@ def get_local_project_root() -> str:
             return path
         path = os.path.dirname(path)
 
-def write_delta_table_wrapper(input_env: str, writer: Writer, input_write_dict: dict):
+def write_delta_table_wrapper(input_env: str, writer: Writer, input_write_dict: dict, logger):
     """
     Write Dataframe in Databricks Delta Table For Each Layer
     :param input_env:
     :param writer:
     :param input_write_dict:
+    :param logger:
     :return:
     """
     if input_env == "local":
@@ -61,6 +63,7 @@ def write_delta_table_wrapper(input_env: str, writer: Writer, input_write_dict: 
                 input_table_layer=loop_table_layer
             )
             write_dataframe: DataFrame = input_write_dict[each_element][DATAFRAME_KEY_NAME]
+            logger.info(f"Writing {each_element} In Table- {input_table_name} in {loop_table_layer} Layer")
             writer.write_delta(
                 input_dataframe=write_dataframe,
                 input_table_name=input_table_name
@@ -132,7 +135,26 @@ def main():
         except Exception as ex:
             logger.error(f"Input File Reading Failed {ex}")
             raise
-
+        try:
+            """
+            Cleanse Input Dataframes
+            """
+            input_products_dataframe = raw_source_cleansed(
+                input_dataframe=input_products_dataframe,
+                input_table_type=PRODUCT_KEY_NAME
+            )
+            input_customers_dataframe = raw_source_cleansed(
+                input_dataframe=input_customers_dataframe,
+                input_table_type=CUSTOMER_KEY_NAME
+            )
+            input_orders_dataframe = raw_source_cleansed(
+                input_dataframe=input_orders_dataframe,
+                input_table_type=ORDER_KEY_NAME
+            )
+            logger.info(f"Input Dataframes Cleansed Successfully")
+        except Exception as ex:
+            logger.error(f"Input Dataframe Cleansing Failed {ex}")
+            raise
         try:
             writer_instance = Writer(spark=spark)
             """
@@ -154,7 +176,8 @@ def main():
                         DATAFRAME_KEY_NAME: input_customers_dataframe,
                         TABLE_LAYER_KEY_NAME: RAW_KEY_NAME
                     }
-                }
+                },
+                logger=logger
             )
             logger.info(f"Raw Dataframes Written Successfully in Delta Tables")
         except Exception as ex:
@@ -205,7 +228,8 @@ def main():
                         DATAFRAME_KEY_NAME: enriched_customers_dataframe,
                         TABLE_LAYER_KEY_NAME: ENRICHED_KEY_NAME
                     }
-                }
+                },
+                logger=logger
             )
             logger.info(f"Enriched Dataframes Written Successfully in Delta Tables")
         except Exception as ex:
@@ -233,7 +257,8 @@ def main():
                         DATAFRAME_KEY_NAME: output_aggregate,
                         TABLE_LAYER_KEY_NAME: AGGREGATE_KEY_NAME
                     }
-                }
+                },
+                logger=logger
             )
             logger.info(f"Aggregate Dataframe Written Successfully in Delta Table")
         except Exception as ex:
