@@ -39,4 +39,3 @@
   - pandas~=2.3.1 
   - openpyxl~=3.1.5 
   - pyarrow~=21.0.0
-- 
