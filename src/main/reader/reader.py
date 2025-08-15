@@ -1,16 +1,9 @@
-import pandas as pd
 from pyspark.sql import SparkSession, DataFrame
 
-from src.main.enums.input_file_type import InputFileType
-from src.main.reader.options.reader_options import (
-    CSV_OPTIONS,
-    JSON_OPTIONS,
-    EXCEL_OPTIONS,
-)
-from src.main.reader.schema.source_schema import (
-    PRODUCTS_SCHEMA,
-    ORDERS_SCHEMA,
-    CUSTOMERS_SCHEMA,
+from src.main.reader.mapping import INPUT_FILE_TYPE_SCHEMA_OPTIONS_MAP
+from src.main.utils.constants import (
+    READER_MAPPING_SCHEMA_KEY_NAME,
+    READER_MAPPING_OPTIONS_KEY_NAME,
 )
 
 
@@ -34,28 +27,12 @@ class Reader:
         :return:
         """
         file_path = self.file_path+"/"+input_file_name
-        match input_file_typ:
-            case InputFileType.CSV.value:
-                output_df = self.read_file(
-                    input_format_typ=input_file_typ,
-                    input_file_path=file_path,
-                    input_schema=PRODUCTS_SCHEMA,
-                    input_options=CSV_OPTIONS
-                )
-            case InputFileType.JSON.value:
-                output_df = self.read_file(
-                    input_format_typ=input_file_typ,
-                    input_file_path=file_path,
-                    input_schema=ORDERS_SCHEMA,
-                    input_options=JSON_OPTIONS
-                )
-            case InputFileType.EXCEL.value:
-                output_df = self.read_excel(
-                    input_file_path=file_path,
-                    input_schema=CUSTOMERS_SCHEMA,
-                    input_sheet_name=EXCEL_OPTIONS['sheetName']
-                )
-
+        output_df = self.read_file(
+            input_format_typ=input_file_typ,
+            input_file_path=file_path,
+            input_schema=INPUT_FILE_TYPE_SCHEMA_OPTIONS_MAP[input_file_name][READER_MAPPING_SCHEMA_KEY_NAME],
+            input_options=INPUT_FILE_TYPE_SCHEMA_OPTIONS_MAP[input_file_name][READER_MAPPING_OPTIONS_KEY_NAME]
+        )
         return output_df
 
     def read_file(self, input_format_typ: str, input_file_path: str, input_schema, input_options: dict):
@@ -69,18 +46,4 @@ class Reader:
         """
         return (
             self.spark.read.format(input_format_typ).options(**input_options).schema(input_schema).load(input_file_path)
-        )
-
-    def read_excel(self, input_file_path: str, input_schema, input_sheet_name: str) -> DataFrame:
-        """
-        Read Excel File with Specified Schema
-        :param input_file_path:
-        :param input_schema:
-        :param input_sheet_name:
-        :return:
-        """
-        pandas_dataframe = pd.read_excel(sheet_name=input_sheet_name,io=input_file_path)
-        return self.spark.createDataFrame(
-            pandas_dataframe,
-            schema=input_schema
         )

@@ -6,4 +6,3 @@ class InputFileType(Enum):
     """
     CSV = "csv"
     JSON = "json"
-    EXCEL = "excel"

@@ -81,6 +81,7 @@ def main():
                      .appName("PEIApp")
                      .getOrCreate()
                      )
+            logger.info(f"Spark Session Created Successfully {spark.version}")
         except Exception as ex:
             logger.error(f"Spark Session Creation Failed {ex}")
             raise
@@ -102,6 +103,8 @@ def main():
                 For Databricks Environment source Folder is set to Volume Root or dbfs
                 """
                 source_file_path=DATABRICKS_INPUT_PATH
+
+            logger.info(f"Input File Location {source_file_path}")
         except Exception as ex:
             logger.error(f"Source Path Construction Failed {ex}")
             raise
@@ -122,9 +125,10 @@ def main():
                 input_file_name=ORDER_FILE_NAME
             )
             input_customers_dataframe: DataFrame = reader_instance.read(
-                input_file_typ=InputFileType.EXCEL.value,
+                input_file_typ=InputFileType.CSV.value,
                 input_file_name=CUSTOMER_FILE_NAME
             )
+            logger.info(f"All Source Files Read Successfully")
         except Exception as ex:
             logger.error(f"Input File Reading Failed {ex}")
             raise
@@ -152,6 +156,7 @@ def main():
                     }
                 }
             )
+            logger.info(f"Raw Dataframes Written Successfully in Delta Tables")
         except Exception as ex:
             logger.error(f"Raw Dataframe Writing To Delta Failed {ex}")
             raise
@@ -172,10 +177,11 @@ def main():
                 input_table_type=CUSTOMER_KEY_NAME
             )
             custom_enriched_orders_dataframe: DataFrame = custom_enrichment(
-                input_order_dataframe=enriched_orders_dataframe,
-                input_customer_dataframe=enriched_customers_dataframe,
+                input_orders_dataframe=enriched_orders_dataframe,
+                input_customers_dataframe=enriched_customers_dataframe,
                 input_products_dataframe=enriched_products_dataframe
             )
+            logger.info(f"Enriched Dataframes Created Successfully")
         except Exception as ex:
             logger.error(f"Dataframe Enrichment Failed {ex}")
             raise
@@ -201,6 +207,7 @@ def main():
                     }
                 }
             )
+            logger.info(f"Enriched Dataframes Written Successfully in Delta Tables")
         except Exception as ex:
             logger.error(f"Enriched Dataframe Writing To Delta Failed {ex}")
             raise
@@ -210,6 +217,7 @@ def main():
             """
             output_aggregate: DataFrame = custom_aggregate(custom_enriched_orders_dataframe)
             # output_aggregate.show(500, truncate=False, vertical=False)
+            logger.info(f"Custom Aggregate Dataframe Created Successfully")
         except Exception as ex:
             logger.error(f"Custom Aggregate Dataframe Creation Failed {ex}")
             raise
@@ -227,6 +235,7 @@ def main():
                     }
                 }
             )
+            logger.info(f"Aggregate Dataframe Written Successfully in Delta Table")
         except Exception as ex:
             logger.error(f"Aggregate Dataframe Writing To Delta Failed {ex}")
             raise

@@ -13,7 +13,3 @@ JSON_OPTIONS: dict = {
     "multiline": "true",
     "mode": "PERMISSIVE",
 }
-
-EXCEL_OPTIONS: dict = {
-    "sheetName": "Worksheet",
-}

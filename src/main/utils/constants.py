@@ -6,9 +6,12 @@ DELTA_TABLE_FORMAT: str = "delta"
 DELTA_TABLE_MODE: str = "overwrite"
 LOCAL_INPUT_FOLDER: str = "source_data"
 
-CUSTOMER_FILE_NAME: str = "Customer.xlsx"
+CUSTOMER_FILE_NAME: str = "Customers.csv"
 PRODUCT_FILE_NAME: str = "Products.csv"
 ORDER_FILE_NAME: str = "Orders.json"
+
+READER_MAPPING_SCHEMA_KEY_NAME: str = "schema"
+READER_MAPPING_OPTIONS_KEY_NAME: str = "options"
 
 PRODUCT_KEY_NAME: str = "products"
 ORDER_KEY_NAME: str = "orders"
