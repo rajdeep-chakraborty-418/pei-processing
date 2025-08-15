@@ -91,4 +91,3 @@
     - pipeline.pei.products_enriched
   - Aggregated Table
     - pei.year_cat_sub_cat_cust_aggregate 
-
