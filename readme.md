@@ -10,13 +10,19 @@
 - This is a Full Snapshot Processing and Not Incremental Processing
 - The input data schema is consistent and well-formed and based on shared format
 - Order Date last 4 digits are always in YYYY format and considered as year
+
+## Cleansing
+- Cleaning source columns compatible SQL Column Names
+  - A column mapping is created to standardize column names 
+    - src/main/cleaner/cleansed.py
+
+## Enrichment
 - Observed Duplicates in Customer & Product data are handled by using Row_Number()
 - No Timestamp Column in Customer & Product thus random record based on 
   - Customer Id for Customers
   - Product Id for Products
 - Customer Id NULL and Product Id NULL are removed from Master datasets
-- SQL Queries have been provided under scripts directory for reference and execution
-  - These should be executed against Aggregated Table
+- 2 Digit Rounding of Profit from Orders
 
 ## Code Structure
 - `src/` - Contains the main code for data processing and transformation
@@ -42,11 +48,11 @@
   - In Each GitHub Action, workflow execute to ensure Test Cases are passed
 
 ## Pre Processing
-- Convert Excel file of Customers.xlsx to CSV format in Customers.csv
+- Convert Excel file of Customers.xlsx to CSV format in Customers.csv using scripts/converter.py
 
 ## Execution Requirements
 - Create a folder named codebase under /Workspace/Shared
-- Checkout the main branch from the repository into the codebase folder
+- Checkout the main branch from the repository inside the codebase folder
 - Create a catalog named pipeline
   - create a schema named pei
   - create a volume named artifacts
@@ -61,6 +67,7 @@
 - Navigate to src.main.flow.py
 - Run the flow.py with the All Purpose Cluster / Serverless
 - Observe the logs in console for completion of steps with message
+- Display Top 50 records for each SQL statement in terminal
 - Once Completed Open the Delta Tables in Databricks SQL
   - Raw Tables
     - pipeline.pei.orders_raw
@@ -72,4 +79,4 @@
     - pipeline.pei.products_enriched
   - Aggregated Table
     - pei.year_cat_sub_cat_cust_aggregate 
-- Display Top 50 records for each SQL in terminal
+
