@@ -88,7 +88,7 @@ def main():
         For Databricks Environment: PEI_ENV -> databricks
         """
         try:
-            env: str=os.getenv("PEI_ENV")
+            env: str=os.getenv("PEI_ENV", "databricks")
             local_root: str = get_local_project_root()
             if env == "local":
                 """

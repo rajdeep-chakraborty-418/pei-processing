@@ -33,6 +33,7 @@
   - utils - Contains utility functions and classes used across the pipeline
 - `scripts/` - Contains SQL scripts for reference and execution.
 - `tst/` - Contains unit tests for the code.
+  - In Each Github Action, workflow execute to ensure Test Cases are passed
 
 ## Requirements
 - Install below pypi packages in Databricks Cluster
