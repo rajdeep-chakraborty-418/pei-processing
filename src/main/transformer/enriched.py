@@ -11,6 +11,7 @@ def raw_source_enrichment(input_dataframe: DataFrame, input_table_type: str) -> 
         Drop All Rest Columns
         Null Check on Primary Key Columns
         Remove Duplicates based on Primary Key Columns
+        For Orders Table, Extract Year from Order Date and Round Profit Column
     :param input_dataframe
     :param input_table_type
     :return:
@@ -72,7 +73,6 @@ def custom_enrichment(input_orders_dataframe: DataFrame, input_customers_datafra
     """
     Create an enriched table which has
         order information
-        Profit rounded to 2 decimal places
         Customer name and country
         Product category and sub category
     :param input_orders_dataframe:

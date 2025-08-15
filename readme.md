@@ -18,9 +18,10 @@
   - reader - Contains All the Reader Class for Ingestion using Common method
     - CSV Reader
     - JSON Reader
+  - cleaner - Contains All the Cleaner Class for Data Cleaning
+    - Renames Columns to Standard Format
   - transformer - Contains All the Transformer Class for Data Transformation
-    - Enricher - 
-      - Renames Columns in standard format
+    - Enricher -
       - Handles Duplicates
       - Remove Null Value Records in Primary Key
     - Aggregator - 
