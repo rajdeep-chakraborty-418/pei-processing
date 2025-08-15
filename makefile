@@ -5,8 +5,12 @@ DIR_SRC_FILES = $(shell find . -type f -name "*.py" \
 -not -path "./source_data/*" \
 -not -path "./dist/*" \
 )
+setup:
+	python3 -m pip install --upgrade pip
+	python3 -m pip install --upgrade setuptools
+	python3 -m pip install --upgrade wheel
+	python3 -m pip install -r requirements.txt
 
-CMD_PYTEST_OPTIONS = -ra -vv --tb=short --cache-clear --color=yes --show-capture=no --strict-markers
 unit_test:
 	python3 -m pytest -vv -s --cache-clear tst/main/*
 

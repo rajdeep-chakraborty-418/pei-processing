@@ -1,0 +1,27 @@
+name: Code Validation
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set Up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Setup Environment
+        run: |
+          make setup
+
+      - name: Run Test Cases
+        run: |
+          make unit_tests

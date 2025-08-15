@@ -1,5 +1,5 @@
 from pyspark.sql import DataFrame, Window
-from pyspark.sql.functions import col, round as spark_round, split, row_number
+from pyspark.sql.functions import col, round as spark_round, split, row_number, trim
 
 from src.main.utils.constants import ROUND_DIGITS
 
@@ -37,7 +37,7 @@ def raw_source_enrichment(input_dataframe: DataFrame, input_table_type: str) -> 
                 col("category"),
                 col("sub_category")
             ).filter(
-                col("product_id").isNotNull()
+                (col("product_id").isNotNull()) & (trim(col("product_id")) != "")
             ).withColumn(
                 "row_num", row_number().over(product_duplicate_window)
             ).filter(
@@ -56,7 +56,7 @@ def raw_source_enrichment(input_dataframe: DataFrame, input_table_type: str) -> 
                 col("customer_name"),
                 col("country")
             ).filter(
-                col("customer_id").isNotNull()
+                (col("customer_id").isNotNull()) & (trim(col("customer_id")) != "")
             ).withColumn(
                 "row_num", row_number().over(customer_duplicate_window)
             ).filter(
@@ -92,20 +92,20 @@ def raw_source_enrichment(input_dataframe: DataFrame, input_table_type: str) -> 
 
     return output_dataframe
 
-def custom_enrichment(input_order_dataframe: DataFrame, input_customer_dataframe: DataFrame, input_products_dataframe: DataFrame) -> DataFrame:
+def custom_enrichment(input_orders_dataframe: DataFrame, input_customers_dataframe: DataFrame, input_products_dataframe: DataFrame) -> DataFrame:
     """
     Create an enriched table which has
         order information
         Profit rounded to 2 decimal places
         Customer name and country
         Product category and sub category
-    :param input_order_dataframe:
-    :param input_customer_dataframe:
+    :param input_orders_dataframe:
+    :param input_customers_dataframe:
     :param input_products_dataframe:
     :return:
     """
-    output_dataframe: DataFrame = input_order_dataframe.alias("order").join(
-        input_customer_dataframe.alias("customer"),
+    output_dataframe: DataFrame = input_orders_dataframe.alias("order").join(
+        input_customers_dataframe.alias("customer"),
         on="customer_id",
         how="left"
     ).join(
@@ -113,7 +113,15 @@ def custom_enrichment(input_order_dataframe: DataFrame, input_customer_dataframe
         on="product_id",
         how="left"
     ).select(
-        col("order.*"),
+        col("order.order_id").alias("order_id"),
+        col("order.order_date").alias("order_date"),
+        col("order.year").alias("year"),
+        col("order.customer_id").alias("customer_id"),
+        col("order.product_id").alias("product_id"),
+        col("order.quantity").alias("quantity"),
+        col("order.price").alias("price"),
+        col("order.discount").alias("discount"),
+        col("order.profit").alias("profit"),
         col("customer.customer_name").alias("customer_name"),
         col("customer.country").alias("customer_country"),
         col("products.category").alias("category"),

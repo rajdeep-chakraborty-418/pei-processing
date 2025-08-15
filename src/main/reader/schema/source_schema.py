@@ -17,6 +17,9 @@ PRODUCTS_SCHEMA = StructType([
     StructField("Price per product", DoubleType(), True),
 ])
 
+"""
+Define Orders Input Data Schema
+"""
 ORDERS_SCHEMA = StructType([
     StructField("Row ID", StringType(), True),
     StructField("Order ID", StringType(), True),
@@ -31,6 +34,9 @@ ORDERS_SCHEMA = StructType([
     StructField("Profit", DoubleType(), True)
 ])
 
+"""
+Define Customers Input Data Schema
+"""
 CUSTOMERS_SCHEMA = StructType([
     StructField("Customer ID", StringType(), True),
     StructField("Customer Name", StringType(), True),

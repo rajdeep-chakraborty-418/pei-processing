@@ -1,4 +1,4 @@
-CATALOG_NAME: str = "pipline"
+CATALOG_NAME: str = "pipeline"
 SCHEMA_NAME: str = "pei"
 DATABRICKS_INPUT_PATH: str = "/Volumes/pipeline/pei/artifacts/input"
 
