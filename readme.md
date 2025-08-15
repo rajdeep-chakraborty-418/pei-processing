@@ -23,6 +23,7 @@
   - Product Id for Products
 - Customer Id NULL and Product Id NULL are removed from Master datasets
 - 2 Digit Rounding of Profit from Orders
+- src/main/transformer/enriched.py
 
 ## Code Structure
 - `src/` - Contains the main code for data processing and transformation
@@ -38,6 +39,7 @@
       - Remove Null Value Records in Primary Key
     - Aggregator - 
       - Aggregates Profit Data based on Year and Category, Sub Category
+      - src/main/transformer/aggregate.py
   - writer - Contains All the Writer Class for Output
     - Raw Writer - Writes Raw Data to Delta Table
     - Enriched Writer - Writes Enriched Data to Delta Table
