@@ -1,6 +1,8 @@
 import os
-
 from pyspark.sql import SparkSession, DataFrame
+
+import sys
+sys.path.append("/Workspace/Shared/codebase/pei-processing/")
 
 from src.main.enums.input_file_type import InputFileType
 from src.main.reader.reader import Reader
