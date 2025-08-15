@@ -25,7 +25,7 @@ from src.main.utils.constants import (
     RAW_KEY_NAME, DATABRICKS_INPUT_PATH,
 )
 from src.main.utils.logger_utils import log_end
-from src.main.writer.mapping.mapping import get_table_name, TABLE_MAPPING
+from src.main.writer.mapping import get_table_name, TABLE_MAPPING
 from src.main.writer.writer import Writer
 
 

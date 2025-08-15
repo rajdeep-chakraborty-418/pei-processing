@@ -35,4 +35,4 @@ def get_table_name(input_table_type: str, input_table_layer: str) -> str:
     :param input_table_layer:
     :return:
     """
-    return f"{CATALOG_NAME}.{SCHEMA_NAME}.{TABLE_MAPPING[input_table_type][input_table_layer]}"
+    return TABLE_MAPPING[input_table_type][input_table_layer]

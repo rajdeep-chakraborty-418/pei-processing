@@ -16,6 +16,7 @@ class TestWriter(unittest.TestCase):
         self.spark = MagicMock(spec='SparkSession')
         self.writer = Writer(spark=self.spark)
         self.writer.format = "Test-Delta"
+        self.writer.schema = "test_catalog.test_schema"
         self.mock_dataframe = MagicMock(spec='DataFrame')
 
     def test_write_delta(self):
@@ -38,5 +39,5 @@ class TestWriter(unittest.TestCase):
         )
         mock_write.format.assert_called_with(self.writer.format)
         mock_format.mode.assert_called_with("overwrite")
-        mock_mode.saveAsTable.assert_called_with("test_table")
+        mock_mode.saveAsTable.assert_called_with("test_catalog.test_schema.test_table")
         self.assertTrue(mock_mode.saveAsTable.called)
