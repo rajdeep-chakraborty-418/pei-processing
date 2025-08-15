@@ -52,7 +52,17 @@
 ## Pre Processing
 - Convert Excel file of Customers.xlsx to CSV format in Customers.csv using scripts/converter.py
 
-## Execution Requirements
+## Local Execution Requirements
+- Setup PEI_ENV environment variable to local
+- Run make e2e_run to see output in terminal
+- Create a folder source_data under root
+  - Place 3 files
+  - Make sure to update the Excel to CSV using scripts/converter.py
+- Modify Flow Command to add some dataframe.show() to see in local
+- Databricks Delta Write and SQL Statements are skipped in local
+
+## Databricks Execution Requirements
+- Go to Databricks Workspace
 - Create a folder named codebase under /Workspace/Shared
 - Checkout the main branch from the repository inside the codebase folder
 - Create a catalog named pipeline
