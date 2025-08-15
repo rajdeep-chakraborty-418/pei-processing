@@ -1,6 +1,8 @@
 CATALOG_NAME: str = "pipeline"
 SCHEMA_NAME: str = "pei"
-DATABRICKS_INPUT_PATH: str = "/Volumes/pipeline/pei/artifacts/input"
+VOLUME_NAME: str = "artifacts"
+INPUT_DIRECTORY: str = "input"
+DATABRICKS_INPUT_PATH: str = f"/Volumes/{CATALOG_NAME}/{SCHEMA_NAME}/{VOLUME_NAME}/{INPUT_DIRECTORY}"
 
 DELTA_TABLE_FORMAT: str = "delta"
 DELTA_TABLE_MODE: str = "overwrite"
