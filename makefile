@@ -9,7 +9,7 @@ setup:
 	python3 -m pip install --upgrade pip
 	python3 -m pip install --upgrade setuptools
 	python3 -m pip install --upgrade wheel
-	python3 -m pip install -r requirements.txt
+	python3 -m pip install -r requirement.txt
 
 unit_test:
 	python3 -m pytest -vv -s --cache-clear tst/main/*
