@@ -49,8 +49,6 @@
 - `tst/` - Contains unit tests for the code
   - In Each GitHub Action, workflow execute to ensure Test Cases are passed
 
-## Pre Processing
-- Convert Excel file of Customers.xlsx to CSV format in Customers.csv using scripts/converter.py
 
 ## Local Execution Requirements
 - Setup PEI_ENV environment variable to local
@@ -77,10 +75,17 @@
   - create a folder under artifacts named sql_files
     - Upload SQL files from scripts over there
 - Navigate to src.main.flow.py
+- Added the below two lines at the top of the file for modular execution
+  - import sys 
+  - sys.path.append("/Workspace/Shared/codebase/pei-processing/")
 - Run the flow.py with the All Purpose Cluster / Serverless
 - Observe the logs in console for completion of steps with message
-- Display Top 50 records for each SQL statement in terminal
-- Once Completed Open the Delta Tables in Databricks SQL
+- Display Top 50 rows (Added in src.main.utils.constants.py as NO_OF_RECORDS_TO_SHOW) each SQL Query statement in terminal
+  1. Profit by Year 
+  2. Profit by Year + Product Category 
+  3. Profit by Customer 
+  4. Profit by Customer + Year
+- Once Execution is Completed Open the Delta Tables in Databricks SQL
   - Raw Tables
     - pipeline.pei.orders_raw
     - pipeline.pei.customers_raw
@@ -90,4 +95,4 @@
     - pipeline.pei.customers_enriched
     - pipeline.pei.products_enriched
   - Aggregated Table
-    - pei.year_cat_sub_cat_cust_aggregate 
+    - pipeline.pei.year_cat_sub_cat_cust_aggregate 
