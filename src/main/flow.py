@@ -132,7 +132,7 @@ def main():
             logger.info(f"Input File Location {source_file_path}")
         except Exception as ex:
             logger.error(f"Source Path Construction Failed {ex}")
-            raise
+            return
         """
         Read Input Files From Pre Defined Source Folder
         """
@@ -156,7 +156,7 @@ def main():
             logger.info(f"All Source Files Read Successfully")
         except Exception as ex:
             logger.error(f"Input File Reading Failed {ex}")
-            raise
+            return
         try:
             """
             Cleanse Input Dataframes
@@ -176,7 +176,7 @@ def main():
             logger.info(f"Input Dataframes Cleansed Successfully")
         except Exception as ex:
             logger.error(f"Input Dataframe Cleansing Failed {ex}")
-            raise
+            return
         try:
             writer_instance = Writer(spark=spark)
             """
@@ -204,7 +204,7 @@ def main():
             logger.info(f"Raw Dataframes Written Successfully in Delta Tables")
         except Exception as ex:
             logger.error(f"Raw Dataframe Writing To Delta Failed {ex}")
-            raise
+            return
         """
         Create Enriched Dataframes
         """
@@ -229,7 +229,7 @@ def main():
             logger.info(f"Enriched Dataframes Created Successfully")
         except Exception as ex:
             logger.error(f"Dataframe Enrichment Failed {ex}")
-            raise
+            return
         """
         Write Enriched Dataframes in Delta Tables
         """
@@ -256,7 +256,7 @@ def main():
             logger.info(f"Enriched Dataframes Written Successfully in Delta Tables")
         except Exception as ex:
             logger.error(f"Enriched Dataframe Writing To Delta Failed {ex}")
-            raise
+            return
         try:
             """
             Calculate Custom Aggregate Dataframe
@@ -266,7 +266,7 @@ def main():
             logger.info(f"Custom Aggregate Dataframe Created Successfully")
         except Exception as ex:
             logger.error(f"Custom Aggregate Dataframe Creation Failed {ex}")
-            raise
+            return
         try:
             """
             Write Aggregated Dataframes in Delta Tables
@@ -285,7 +285,7 @@ def main():
             logger.info(f"Aggregate Dataframe Written Successfully in Delta Table")
         except Exception as ex:
             logger.error(f"Aggregate Dataframe Writing To Delta Failed {ex}")
-            raise
+            return
         """
         Execute Custom SQL Scripts on Aggregate Table
         """
@@ -299,7 +299,7 @@ def main():
             logger.info(f"Custom SQL Script Executed Successfully")
         except Exception as ex:
             logger.error(f"Custom SQL Script Execution Failed {ex}")
-            raise
+            return
     except Exception as ex:
         logger.error("Main Flow Failed" + " %s", str(ex))
         raise
