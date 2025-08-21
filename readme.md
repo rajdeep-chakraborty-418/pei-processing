@@ -1,4 +1,5 @@
 ## Overview
+https://docs.google.com/document/d/17ptqFrxXd9oNNh_4g1q94nQZ9NY4AXkFOjmIM9lMxuQ/edit?tab=t.0
 
 ## Pre Processing
 - Convert Excel file of Customer.xlsx to CSV format in Customers.csv
